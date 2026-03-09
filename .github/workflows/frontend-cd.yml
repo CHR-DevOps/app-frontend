@@ -2,7 +2,7 @@ name: Frontend CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
   contents: read
@@ -38,3 +38,5 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/CHR-DevOps/app-frontend
