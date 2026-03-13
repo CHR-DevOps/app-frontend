@@ -1,6 +1,6 @@
 // Playwright config for frontend
 module.exports = {
-  testDir: './tests',
+  testDir: './e2e',
   webServer: {
     command: 'npm run dev',
     port: 3000,
