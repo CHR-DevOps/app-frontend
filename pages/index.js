@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import DataForm from '../components/DataForm';
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+import { getApiBaseUrl } from '../lib/apiBaseUrl';
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -10,7 +9,7 @@ export default function Home() {
   const fetchData = async () => {
     try {
       setError('');
-      const response = await fetch(`${API_BASE_URL}/api/data`);
+      const response = await fetch(`${getApiBaseUrl()}/api/data`);
 
       if (!response.ok) {
         const text = await response.text();
