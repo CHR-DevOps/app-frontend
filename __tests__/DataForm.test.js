@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
@@ -8,9 +7,9 @@ beforeEach(() => {
   global.fetch = jest.fn(() => Promise.resolve({ ok: true }));
 });
 
-test('submits name, clears input and calls onDataAdded', async () => {
-  const onDataAdded = jest.fn();
-  render(<DataForm onDataAdded={onDataAdded} />);
+test('submits name, clears input and calls onSuccess', async () => {
+  const onSuccess = jest.fn();
+  render(<DataForm onSuccess={onSuccess} />);
 
   const input = screen.getByPlaceholderText('Enter a name');
 
@@ -25,6 +24,6 @@ test('submits name, clears input and calls onDataAdded', async () => {
 
   expect(global.fetch).toHaveBeenCalled();
 
-  await waitFor(() => expect(onDataAdded).toHaveBeenCalled());
+  await waitFor(() => expect(onSuccess).toHaveBeenCalled());
   await waitFor(() => expect(input).toHaveValue(''));
 });

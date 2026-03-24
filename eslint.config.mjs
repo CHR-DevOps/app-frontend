@@ -3,7 +3,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['.next/**', 'coverage/**', 'node_modules/**'],
+    ignores: ['.next/**', 'frontend/**', 'coverage/**', 'node_modules/**', 'eslint.config.mjs'],
   },
   js.configs.recommended,
   {
@@ -23,7 +23,7 @@ export default [
       },
     },
     rules: {
-      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^[A-Z_]' }],
     },
   },
 ];
