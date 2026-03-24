@@ -6,3 +6,4 @@ coverage
 .next
 *.log
 .last-run.json
+.env.local

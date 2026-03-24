@@ -13,3 +13,4 @@ jest.config.js
 *.log
 .next
 build
+.env.local

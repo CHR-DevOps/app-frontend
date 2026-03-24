@@ -1,29 +1,26 @@
 import { useEffect, useState } from 'react';
 import DataForm from '../components/DataForm';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+
 export default function Home() {
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      setLoading(true);
       setError('');
-
-      const response = await fetch('/api/data');
+      const response = await fetch(`${API_BASE_URL}/api/data`);
 
       if (!response.ok) {
         const text = await response.text();
-        throw new Error(text || `Request failed with status ${response.status}`);
+        throw new Error(text || 'Failed to fetch data');
       }
 
       const result = await response.json();
-      setData(Array.isArray(result) ? result : []);
+      setData(result);
     } catch (err) {
-      setError(err.message || 'Failed to load data');
-    } finally {
-      setLoading(false);
+      setError(err.message);
     }
   };
 
@@ -32,30 +29,19 @@ export default function Home() {
   }, []);
 
   return (
-    <main style={{ padding: '24px', fontFamily: 'Arial, sans-serif' }}>
+    <div>
       <h1>Data List</h1>
-
       <DataForm onSuccess={fetchData} />
-
-      {loading && <p>Loading...</p>}
-
-      {error && (
-        <p style={{ color: 'red' }}>
-          Error: {error}
-        </p>
-      )}
-
-      {!loading && !error && data.length === 0 && (
+      {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+      {data.length === 0 ? (
         <p>No data found.</p>
-      )}
-
-      {!loading && !error && data.length > 0 && (
+      ) : (
         <ul>
           {data.map((item) => (
-            <li key={item.id ?? item.name}>{item.name}</li>
+            <li key={item.id}>{item.name}</li>
           ))}
         </ul>
       )}
-    </main>
+    </div>
   );
 }

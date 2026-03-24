@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+
 export default function DataForm({ onSuccess }) {
   const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/api/data', {
+    const response = await fetch(`${API_BASE_URL}/api/data`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
