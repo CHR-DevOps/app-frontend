@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import DataForm from '../components/DataForm';
 import { getApiBaseUrl } from '../lib/apiBaseUrl';
 
-export default function Home() {
+const COLOR_STYLES = {
+  blue:  { background: '#1e40af', color: '#ffffff' },
+  green: { background: '#15803d', color: '#ffffff' },
+};
+
+export default function Home({ deployColor }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
 
@@ -27,8 +32,21 @@ export default function Home() {
     fetchData();
   }, []);
 
+  const banner = COLOR_STYLES[deployColor];
+
   return (
     <div>
+      {banner && (
+        <div style={{
+          ...banner,
+          padding: '8px 16px',
+          fontWeight: 'bold',
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em',
+        }}>
+          Environment: {deployColor}
+        </div>
+      )}
       <h1>Data List</h1>
       <DataForm onSuccess={fetchData} />
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
@@ -43,4 +61,12 @@ export default function Home() {
       )}
     </div>
   );
+}
+
+export function getServerSideProps() {
+  return {
+    props: {
+      deployColor: process.env.DEPLOY_COLOR || null,
+    },
+  };
 }
