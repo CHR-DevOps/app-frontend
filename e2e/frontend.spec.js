@@ -23,7 +23,7 @@ test('should display data list and add item', async ({ page }) => {
   await page.waitForLoadState('networkidle');
 
   await expect(page.locator('h1')).toHaveText('Data List');
-  await expect(page.getByPlaceholder('Enter a neame')).toBeVisible();
+  await expect(page.getByPlaceholder('Enter a name')).toBeVisible();
 
   if (backendCreatedUser) {
     await expect(
